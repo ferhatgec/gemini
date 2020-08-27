@@ -8,18 +8,35 @@
 #include <vte/vte.h> /* LibVTE */
 
 /*
-	TODO: Add color scheme, icon, transparent option and version.
+	TODO: Add color scheme, transparent option and version.
 */
+
+
+GdkPixbuf *create_pixbuf(const gchar * filename) {
+   GdkPixbuf *pixbuf;
+   GError *error = NULL;
+   pixbuf = gdk_pixbuf_new_from_file(filename, &error);
+   
+   if (!pixbuf) {
+      fprintf(stderr, "%s\n", error->message);
+      g_error_free(error);
+   }
+
+   return pixbuf;
+}
 
 int main(int argc, char *argv[]) {
     GtkWidget *window, *terminal;
-
+    GdkPixbuf *icon;
+	
     /* Initialise GTK, the window and the terminal */
     gtk_init(&argc, &argv);
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "GeminiTerm");
 
+    icon = create_pixbuf("resource/geminiterm_icon.png");
+    gtk_window_set_icon(GTK_WINDOW(window), icon);	
     /* Start a new shell */
     gchar **envp = g_get_environ();
     gchar **command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL }; /* Get SHELL environment. */
@@ -42,5 +59,6 @@ int main(int argc, char *argv[]) {
     /* Put widgets together and run the main loop */
     gtk_container_add(GTK_CONTAINER(window), terminal);
     gtk_widget_show_all(window);
+    g_object_unref(icon);
     gtk_main();
 }
