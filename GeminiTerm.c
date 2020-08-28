@@ -34,6 +34,17 @@ GdkPixbuf *create_pixbuf(const gchar * filename) {
    return pixbuf;
 }
 
+void gemini_Callback(VteTerminal *term, GPid pid,
+	GError *error, gpointer user_data) {
+	if(error == NULL) {
+		/* Logging */
+		g_print("Gemini started. PID: %d", pid); 
+	} else {
+		g_print(error->message);
+		g_clear_error(&error);
+	} 
+		
+}
 
 void gemini_start() {
     terminal = vte_terminal_new();
@@ -61,7 +72,7 @@ void gemini_start() {
         NULL,
         -1,
         NULL,
-        NULL,
+        gemini_Callback,
         NULL);
 
     /* Connect some signals */
