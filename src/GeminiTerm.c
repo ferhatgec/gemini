@@ -49,6 +49,13 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 		
 }
 
+void gemini_connect_signals() {
+    g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
+    g_signal_connect(terminal, "child-exited", gtk_main_quit, NULL);
+    g_signal_connect(terminal, "key-press-event", G_CALLBACK(gemini_on_keypress), 
+    	GTK_WINDOW(window));
+}
+
 void gemini_start() {
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -78,11 +85,8 @@ void gemini_start() {
         gemini_Callback, /* Async Callback */
         NULL);		 /* Callback data */
 
-    /* Connect some signals */
-    g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
-    g_signal_connect(terminal, "child-exited", gtk_main_quit, NULL);
-    g_signal_connect(terminal, "key-press-event", G_CALLBACK(gemini_on_keypress), 
-    	GTK_WINDOW(window));
+    /* Connect signals */
+    gemini_connect_signals();
 
     /* Put widgets together and run the main loop */
     gtk_container_add(GTK_CONTAINER(window), terminal);
@@ -104,6 +108,8 @@ gboolean gemini_on_keypress(GtkWidget *terminal, GdkEventKey *event,
                 vte_terminal_paste_clipboard(VTE_TERMINAL(terminal));
                 return TRUE;
             }
+
+
     }
     return FALSE;
 }
