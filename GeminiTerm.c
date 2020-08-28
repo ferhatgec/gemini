@@ -95,7 +95,18 @@ void gemini_start() {
 /* Prototype for Handle terminal keypress events. */
 gboolean gemini_on_keypress(GtkWidget *terminal, GdkEventKey *event, 
 	gpointer user_data) {
-	return FALSE;
+    /* Check for CTRL, ALT and SHIFT keys */
+    switch (event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK | GDK_MOD1_MASK)) {
+        /* CTRL + ALT */
+        case GDK_MOD1_MASK | GDK_CONTROL_MASK:
+            switch (event->keyval) {
+            /* Paste */
+            case GDK_KEY_v:
+                vte_terminal_paste_clipboard(VTE_TERMINAL(terminal));
+                return TRUE;
+            }
+    }
+    return FALSE;
 }
 
 int main(int argc, char *argv[]) {
