@@ -57,7 +57,8 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 		g_print(error->message);
 		g_clear_error(&error);
 	} 
-		
+	
+	printf("\n"); /* Newline */
 }
 
 /*
@@ -80,6 +81,12 @@ void gemini_configuration() {
     	
         /* Disable audible bell */
     	vte_terminal_set_audible_bell(VTE_TERMINAL(terminal), FALSE);
+
+	/* Enable bold text */
+    	vte_terminal_set_allow_bold(VTE_TERMINAL(terminal), TRUE);
+    
+	/* Allow hyperlinks */
+    	vte_terminal_set_allow_hyperlink(VTE_TERMINAL(terminal), TRUE);
 }
 
 void gemini_connect_signals() {
