@@ -13,7 +13,7 @@
 /*
 	TODO: Add Major, Minor definitions for Gemini version.
 */
-#define GEMINI_TERM_VERSION "0.1-beta-1"
+#define GEMINI_TERM_VERSION "0.1-beta-2"
 
 /* Setting values */
 #define GEMINI_TERM_FONT "Monospace Regular"
