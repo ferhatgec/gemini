@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "GeminiTerm");
+    gtk_window_set_default_size(GTK_WINDOW(window), 800, 500);
+    gtk_window_set_resizable (GTK_WINDOW(window), TRUE);
 
     icon = create_pixbuf("resource/gemini.png");
     gtk_window_set_icon(GTK_WINDOW(window), icon);	
