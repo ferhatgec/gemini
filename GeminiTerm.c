@@ -43,16 +43,21 @@ int main(int argc, char *argv[]) {
     gchar **envp = g_get_environ();
     gchar **command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL }; /* Get SHELL environment. */
     g_strfreev(envp);
-    vte_terminal_spawn_async(VTE_TERMINAL(terminal),
-        VTE_PTY_DEFAULT,
-        NULL,       /* working directory  */
-        command,    /* command */
-        NULL,       /* environment */
-        0,          /* spawn flags */
-        NULL, NULL, /* child setup */
-        NULL,       /* child pid */
-        -1,         /* timeout */
-        NULL, NULL, NULL);
+
+    /* Spawn asynchronous terminal */
+    vte_terminal_spawn_async(VTE_TERMINAL(terminal), 
+        VTE_PTY_DEFAULT, 
+        NULL,
+        command, 
+        NULL, 
+        G_SPAWN_DO_NOT_REAP_CHILD,
+        NULL,
+        NULL,
+        NULL,
+        -1,
+        NULL,
+        NULL,
+        NULL);
 
     /* Connect some signals */
     g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
