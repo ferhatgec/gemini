@@ -9,6 +9,8 @@
 #include <vte/vte.h> /* LibVTE */
 #include <gtk/gtk.h> /* GTK */
 
+#include <GeminiTerm.h>
+
 #ifdef GDK_WINDOWING_X11
 	#include <gdk/gdkx.h>
 	#include <X11/Xlib.h>
@@ -21,9 +23,6 @@
 GtkWidget *window, *terminal;
 GdkPixbuf *icon;
 
-/* Prototype for Handle terminal keypress events. */
-gboolean gemini_on_keypress(GtkWidget *, GdkEventKey *,
-gpointer);
 
 GdkPixbuf *create_pixbuf(const gchar * filename) {
    GdkPixbuf *pixbuf;
