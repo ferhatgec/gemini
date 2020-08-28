@@ -100,6 +100,10 @@ void gemini_configuration() {
     /* Allow hyperlinks */
     vte_terminal_set_allow_hyperlink(VTE_TERMINAL(terminal), TRUE);
 
+    /* Disable Blick mode */
+    vte_terminal_set_cursor_blink_mode(VTE_TERMINAL(terminal), 
+        VTE_CURSOR_BLINK_OFF);
+	
     /* Set the terminal colors and font */
     vte_terminal_set_colors(VTE_TERMINAL(terminal),
         &CLR_GDK(0xc0d6e4),          /* Foreground */
