@@ -53,7 +53,7 @@ void gemini_start() {
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 500);
     gtk_window_set_resizable (GTK_WINDOW(window), TRUE);
 
-    icon = create_pixbuf("resource/gemini.png");
+    icon = create_pixbuf("resource/gemini.png"); /* Gemini icon. */
     gtk_window_set_icon(GTK_WINDOW(window), icon);	
     /* Start a new shell */
     gchar **envp = g_get_environ();
@@ -62,18 +62,18 @@ void gemini_start() {
 
     /* Spawn asynchronous terminal */
     vte_terminal_spawn_async(VTE_TERMINAL(terminal), 
-        VTE_PTY_DEFAULT, 
-        NULL,
-        command, 
-        NULL, 
-        G_SPAWN_DEFAULT,
-        NULL,
-        NULL,
-        NULL,
-        -1,
-        NULL,
-        gemini_Callback,
-        NULL);
+        VTE_PTY_DEFAULT, /* VTE_PTY flag */
+        NULL,		 /* Working Dir */
+        command, 	 /* Argv */
+        NULL, 		 /* Environment value */
+        G_SPAWN_DEFAULT, /* Spawn flag */
+        NULL,		 /* Child setup function */
+        NULL,		 /* Child setup data */
+        NULL,		 /* Child setup data destroy */
+        -1,		 /* Timeout */
+        NULL,		 /* Cancellable */
+        gemini_Callback, /* Async Callback */
+        NULL);		 /* Callback data */
 
     /* Connect some signals */
     g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
