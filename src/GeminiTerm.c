@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <vte/vte.h> /* LibVTE */
 #include <gtk/gtk.h> /* GTK */
+#include <locale.h> /* For Setlocale */
 
 #include <GeminiTerm.h>
 
@@ -49,6 +50,13 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 		
 }
 
+/*
+	TODO: Add .config/gemini/configuration and read here.
+*/
+void gemini_configuration() {
+	setlocale(LC_NUMERIC, "en_US.UTF-8");
+}
+
 void gemini_connect_signals() {
     g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
     g_signal_connect(terminal, "child-exited", gtk_main_quit, NULL);
@@ -87,6 +95,9 @@ void gemini_start() {
 
     /* Connect signals */
     gemini_connect_signals();
+    
+    /* Gemini configuration */
+    gemini_configuration();
 
     /* Put widgets together and run the main loop */
     gtk_container_add(GTK_CONTAINER(window), terminal);
