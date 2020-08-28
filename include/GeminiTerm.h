@@ -23,6 +23,9 @@
 gboolean gemini_on_keypress(GtkWidget *, GdkEventKey *,
 	gpointer);
 
+/* Prototype for detect Terminal window title */
+gboolean gemini_on_title_Changed(GtkWidget *, gpointer);
+
 void gemini_set_Term_Font(int);
 
 #endif /* GEMINI_TERM_H */

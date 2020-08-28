@@ -74,6 +74,12 @@ void gemini_set_Term_Font(int fontSize) {
     }
 }
 
+gboolean gemini_on_title_Changed(GtkWidget *terminal, gpointer user_data) {
+    GtkWindow *window = user_data;
+    gtk_window_set_title(window,
+	vte_terminal_get_window_title(VTE_TERMINAL(terminal))?:"Gemini"); /* Default = GeminiTerm */
+    return TRUE;
+}
 
 /*
 	TODO: Add .config/gemini/configuration and read here.
@@ -136,8 +142,14 @@ void gemini_configuration() {
 void gemini_connect_signals() {
     g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
     g_signal_connect(terminal, "child-exited", gtk_main_quit, NULL);
+ 
+    /* For Shortcuts */
     g_signal_connect(terminal, "key-press-event", G_CALLBACK(gemini_on_keypress), 
     	GTK_WINDOW(window));
+    
+    /* Terminal window title */
+    g_signal_connect(terminal, "window-title-changed", G_CALLBACK(gemini_on_title_Changed), 
+                        GTK_WINDOW(window));
 }
 
 void gemini_start() {
