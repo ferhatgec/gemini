@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "GeminiTerm");
 
-    icon = create_pixbuf("resource/geminiterm_icon.png");
+    icon = create_pixbuf("resource/gemini.png");
     gtk_window_set_icon(GTK_WINDOW(window), icon);	
     /* Start a new shell */
     gchar **envp = g_get_environ();
