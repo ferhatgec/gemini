@@ -107,9 +107,13 @@ gboolean gemini_on_keypress(GtkWidget *terminal, GdkEventKey *event,
             case GDK_KEY_v:
                 vte_terminal_paste_clipboard(VTE_TERMINAL(terminal));
                 return TRUE;
-            }
 
-
+            /* Copy */
+            case GDK_KEY_c:
+                vte_terminal_copy_clipboard_format(VTE_TERMINAL(terminal), 
+                	VTE_FORMAT_TEXT);
+                return TRUE;  
+	    }
     }
     return FALSE;
 }
