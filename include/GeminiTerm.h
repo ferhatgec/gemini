@@ -23,6 +23,6 @@
 gboolean gemini_on_keypress(GtkWidget *, GdkEventKey *,
 	gpointer);
 
-void gemini_set_Term_Font();
+void gemini_set_Term_Font(int);
 
 #endif /* GEMINI_TERM_H */

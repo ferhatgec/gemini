@@ -34,6 +34,7 @@
 GtkWidget *window, *terminal; /* Window && Terminal widget */
 GdkPixbuf *icon; /* Icon */
 static PangoFontDescription *fontDesc; /* Description for the terminal font */
+static int currentFontSize;
 
 GdkPixbuf *create_pixbuf(const gchar * filename) {
    GdkPixbuf *pixbuf;
@@ -62,11 +63,12 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 }
 
 /* Gemini Terminal set font. */
-void gemini_set_Term_Font() {
+void gemini_set_Term_Font(int fontSize) {
     /* GEMINI_TERM_FONT + " " + GEMINI_TERM_FONT_SIZE */
-    gchar *fontStr = g_strconcat(GEMINI_TERM_FONT, " ", g_strdup_printf("%d", GEMINI_TERM_FONT_SIZE), NULL);
+    gchar *fontStr = g_strconcat(GEMINI_TERM_FONT, " ", g_strdup_printf("%d", fontSize), NULL);
     if ((fontDesc = pango_font_description_from_string(fontStr)) != NULL) {
     	vte_terminal_set_font(VTE_TERMINAL(terminal), fontDesc);
+	currentFontSize = fontSize;
 	pango_font_description_free(fontDesc);
 	g_free(fontStr);	  
     }
@@ -128,7 +130,7 @@ void gemini_configuration() {
         }, 16);
 	
 	
-    gemini_set_Term_Font();  
+    gemini_set_Term_Font(GEMINI_TERM_FONT_SIZE);  
 }
 
 void gemini_connect_signals() {
@@ -198,6 +200,26 @@ gboolean gemini_on_keypress(GtkWidget *terminal, GdkEventKey *event,
                 vte_terminal_copy_clipboard_format(VTE_TERMINAL(terminal), 
                 	VTE_FORMAT_TEXT);
                 return TRUE;  
+
+	     /* 
+		Change font size 
+			CTRL + ALT + 1
+			CTRL + ALT + 2
+			CTRL + ALT + = 
+	      */
+             case GDK_KEY_plus:
+             case GDK_KEY_1:
+                gemini_set_Term_Font(currentFontSize + 1);
+                return TRUE;
+             
+	     case GDK_KEY_minus:
+             case GDK_KEY_2:
+                gemini_set_Term_Font(currentFontSize - 1);
+                return TRUE;
+
+             case GDK_KEY_equal:
+	        gemini_set_Term_Font(GEMINI_TERM_FONT_SIZE);
+	        return TRUE;
 	    }
     }
     return FALSE;
