@@ -19,4 +19,6 @@
 gboolean gemini_on_keypress(GtkWidget *, GdkEventKey *,
 	gpointer);
 
+void gemini_set_Term_Font();
+
 #endif /* GEMINI_TERM_H */

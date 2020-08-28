@@ -28,12 +28,12 @@
                                     .alpha = 0 }
 
 /*
-	TODO: Add color scheme, transparent option and version.
+	TODO: Add transparent option, customization with given value.
 */
 
-GtkWidget *window, *terminal;
-GdkPixbuf *icon;
-
+GtkWidget *window, *terminal; /* Window && Terminal widget */
+GdkPixbuf *icon; /* Icon */
+static PangoFontDescription *fontDesc; /* Description for the terminal font */
 
 GdkPixbuf *create_pixbuf(const gchar * filename) {
    GdkPixbuf *pixbuf;
@@ -60,6 +60,15 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 	
 	printf("\n"); /* Newline */
 }
+
+/* Gemini Terminal set font. */
+void gemini_set_Term_Font() {
+    if ((fontDesc = pango_font_description_from_string("Monospace Regular 12")) != NULL) {
+	    vte_terminal_set_font(VTE_TERMINAL(terminal), fontDesc);
+	    pango_font_description_free(fontDesc);
+    }
+}
+
 
 /*
 	TODO: Add .config/gemini/configuration and read here.
@@ -88,7 +97,7 @@ void gemini_configuration() {
     /* Allow hyperlinks */
     vte_terminal_set_allow_hyperlink(VTE_TERMINAL(terminal), TRUE);
 
-    /* Set the terminal colors */
+    /* Set the terminal colors and font */
     vte_terminal_set_colors(VTE_TERMINAL(terminal),
         &CLR_GDK(0xc0d6e4),          /* Foreground */
         &(GdkRGBA){ .alpha = 0.80 }, /* Background (RGBA) */
@@ -110,6 +119,9 @@ void gemini_configuration() {
             CLR_GDK(0xA3BABF),
             CLR_GDK(0xffffff)
         }, 16);
+	
+	
+    gemini_set_Term_Font();  
 }
 
 void gemini_connect_signals() {
