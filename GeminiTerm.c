@@ -21,6 +21,10 @@
 GtkWidget *window, *terminal;
 GdkPixbuf *icon;
 
+/* Prototype for Handle terminal keypress events. */
+gboolean gemini_on_keypress(GtkWidget *, GdkEventKey *,
+gpointer);
+
 GdkPixbuf *create_pixbuf(const gchar * filename) {
    GdkPixbuf *pixbuf;
    GError *error = NULL;
@@ -78,12 +82,20 @@ void gemini_start() {
     /* Connect some signals */
     g_signal_connect(window, "delete-event", gtk_main_quit, NULL);
     g_signal_connect(terminal, "child-exited", gtk_main_quit, NULL);
+    g_signal_connect(terminal, "key-press-event", G_CALLBACK(gemini_on_keypress), 
+    	GTK_WINDOW(window));
 
     /* Put widgets together and run the main loop */
     gtk_container_add(GTK_CONTAINER(window), terminal);
     gtk_widget_show_all(window);
     g_object_unref(icon);
     gtk_main();
+}
+
+/* Prototype for Handle terminal keypress events. */
+gboolean gemini_on_keypress(GtkWidget *terminal, GdkEventKey *event, 
+	gpointer user_data) {
+	return FALSE;
 }
 
 int main(int argc, char *argv[]) {
