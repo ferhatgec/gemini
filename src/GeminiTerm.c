@@ -65,28 +65,51 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 	TODO: Add .config/gemini/configuration and read here.
 */
 void gemini_configuration() {
-	/* Set numeric locale to en_US.UTF-8 */
-	setlocale(LC_NUMERIC, "en_US.UTF-8");
+    /* Set numeric locale to en_US.UTF-8 */
+    setlocale(LC_NUMERIC, "en_US.UTF-8");
 
-	/* Hide the mouse cursor when typing */
-    	vte_terminal_set_mouse_autohide(VTE_TERMINAL(terminal), FALSE);
+    /* Hide the mouse cursor when typing */
+    vte_terminal_set_mouse_autohide(VTE_TERMINAL(terminal), FALSE);
 
-    	/* Scroll issues */
-    	vte_terminal_set_scrollback_lines(VTE_TERMINAL(terminal), 0);
-    	vte_terminal_set_scroll_on_output(VTE_TERMINAL(terminal), FALSE);
-    	vte_terminal_set_scroll_on_keystroke(VTE_TERMINAL(terminal), TRUE);
+    /* Scroll issues */
+    vte_terminal_set_scrollback_lines(VTE_TERMINAL(terminal), 0);
+    vte_terminal_set_scroll_on_output(VTE_TERMINAL(terminal), FALSE);
+    vte_terminal_set_scroll_on_keystroke(VTE_TERMINAL(terminal), TRUE);
     
-	/* Rewrap the content when terminal size changed */    
-        vte_terminal_set_rewrap_on_resize(VTE_TERMINAL(terminal), TRUE);
+    /* Rewrap the content when terminal size changed */    
+    vte_terminal_set_rewrap_on_resize(VTE_TERMINAL(terminal), TRUE);
     	
-        /* Disable audible bell */
-    	vte_terminal_set_audible_bell(VTE_TERMINAL(terminal), FALSE);
+    /* Disable audible bell */
+    vte_terminal_set_audible_bell(VTE_TERMINAL(terminal), FALSE);
 
-	/* Enable bold text */
-    	vte_terminal_set_allow_bold(VTE_TERMINAL(terminal), TRUE);
+    /* Enable bold text */
+    vte_terminal_set_allow_bold(VTE_TERMINAL(terminal), TRUE);
     
-	/* Allow hyperlinks */
-    	vte_terminal_set_allow_hyperlink(VTE_TERMINAL(terminal), TRUE);
+    /* Allow hyperlinks */
+    vte_terminal_set_allow_hyperlink(VTE_TERMINAL(terminal), TRUE);
+
+    /* Set the terminal colors */
+    vte_terminal_set_colors(VTE_TERMINAL(terminal),
+        &CLR_GDK(0xc0d6e4),          /* Foreground */
+        &(GdkRGBA){ .alpha = 0.80 }, /* Background (RGBA) */
+        (const GdkRGBA[]){           /* Palette */
+            CLR_GDK(0x111111),
+            CLR_GDK(0xd36265),
+            CLR_GDK(0xaece91),
+            CLR_GDK(0xe7e18c),
+            CLR_GDK(0x5297cf),
+            CLR_GDK(0x963c59),
+            CLR_GDK(0x5E7175),
+            CLR_GDK(0xbebebe),
+            CLR_GDK(0x666666),
+            CLR_GDK(0xef8171),
+            CLR_GDK(0xcfefb3),
+            CLR_GDK(0xfff796),
+            CLR_GDK(0x74b8ef),
+            CLR_GDK(0xb85e7b),
+            CLR_GDK(0xA3BABF),
+            CLR_GDK(0xffffff)
+        }, 16);
 }
 
 void gemini_connect_signals() {
