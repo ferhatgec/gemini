@@ -5,12 +5,15 @@
 #
 # */
 
+#include <stdio.h>
 #include <vte/vte.h> /* LibVTE */
 
 /*
 	TODO: Add color scheme, transparent option and version.
 */
 
+GtkWidget *window, *terminal;
+GdkPixbuf *icon;
 
 GdkPixbuf *create_pixbuf(const gchar * filename) {
    GdkPixbuf *pixbuf;
@@ -25,12 +28,8 @@ GdkPixbuf *create_pixbuf(const gchar * filename) {
    return pixbuf;
 }
 
-int main(int argc, char *argv[]) {
-    GtkWidget *window, *terminal;
-    GdkPixbuf *icon;
-	
-    /* Initialise GTK, the window and the terminal */
-    gtk_init(&argc, &argv);
+
+void gemini_start() {
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "GeminiTerm");
@@ -68,4 +67,10 @@ int main(int argc, char *argv[]) {
     gtk_widget_show_all(window);
     g_object_unref(icon);
     gtk_main();
+}
+
+int main(int argc, char *argv[]) {
+    /* Initialize GTK, the window and the terminal */  
+    gtk_init(&argc, &argv);
+    gemini_start();
 }
