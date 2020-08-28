@@ -63,9 +63,12 @@ void gemini_Callback(VteTerminal *term, GPid pid,
 
 /* Gemini Terminal set font. */
 void gemini_set_Term_Font() {
-    if ((fontDesc = pango_font_description_from_string("Monospace Regular 12")) != NULL) {
-	    vte_terminal_set_font(VTE_TERMINAL(terminal), fontDesc);
-	    pango_font_description_free(fontDesc);
+    /* GEMINI_TERM_FONT + " " + GEMINI_TERM_FONT_SIZE */
+    gchar *fontStr = g_strconcat(GEMINI_TERM_FONT, " ", g_strdup_printf("%d", GEMINI_TERM_FONT_SIZE), NULL);
+    if ((fontDesc = pango_font_description_from_string(fontStr)) != NULL) {
+    	vte_terminal_set_font(VTE_TERMINAL(terminal), fontDesc);
+	pango_font_description_free(fontDesc);
+	g_free(fontStr);	  
     }
 }
 

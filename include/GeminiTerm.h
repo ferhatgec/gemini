@@ -15,6 +15,10 @@
 */
 #define GEMINI_TERM_VERSION "0.1-beta-1"
 
+/* Setting values */
+#define GEMINI_TERM_FONT "Monospace Regular"
+#define GEMINI_TERM_FONT_SIZE 12
+
 /* Prototype for Handle terminal keypress events. */
 gboolean gemini_on_keypress(GtkWidget *, GdkEventKey *,
 	gpointer);
