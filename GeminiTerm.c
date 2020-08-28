@@ -7,6 +7,12 @@
 
 #include <stdio.h>
 #include <vte/vte.h> /* LibVTE */
+#include <gtk/gtk.h> /* GTK */
+
+#ifdef GDK_WINDOWING_X11
+	#include <gdk/gdkx.h>
+	#include <X11/Xlib.h>
+#endif
 
 /*
 	TODO: Add color scheme, transparent option and version.
