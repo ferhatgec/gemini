@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Fegeya Gemini
+Exec=gemini
+Icon=/usr/share/pixmaps/gemini/gemini.png
+Type=Application
+Categories=GTK;GNOME;TerminalEmulator;
+Terminal=false
