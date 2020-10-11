@@ -149,11 +149,11 @@ void gemini_connect_signals() {
 void gemini_start() {
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "GeminiTerm");
+    gtk_window_set_title(GTK_WINDOW(window), "Fegeya Gemini");
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 500);
     gtk_window_set_resizable (GTK_WINDOW(window), TRUE);
 
-    icon = create_pixbuf("resource/gemini.png"); /* Gemini icon. */
+    icon = create_pixbuf("/usr/share/pixmaps/gemini/gemini.png"); /* Gemini icon. */
     gtk_window_set_icon(GTK_WINDOW(window), icon);	
     /* Start a new shell */
     gchar **envp = g_get_environ();
