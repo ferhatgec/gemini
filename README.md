@@ -1,5 +1,5 @@
-# Gemini Terminal Emulator
-## Gemini Terminal Emulator based on VTE.
+# Fegeya Gemini 
+## Terminal Emulator based on VTE.
 
 ### Build
   * Required:
@@ -9,4 +9,4 @@
       
   * Use ```sh make.sh```
   
-#### Gemini Terminal Emulator licensed under the terms of MIT License.
+#### Fegeya Gemini licensed under the terms of MIT License.
