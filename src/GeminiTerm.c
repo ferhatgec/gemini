@@ -31,8 +31,9 @@
 	TODO: Add transparent option, customization with given value.
 */
 
-GtkWidget *window, *terminal; /* Window && Terminal widget */
+GtkWidget *window, *terminal, *header, *button, *image; /* Window, Headerbar && Terminal widget */
 GdkPixbuf *icon; /* Icon */
+
 static PangoFontDescription *fontDesc; /* Description for the terminal font */
 static int currentFontSize;
 
@@ -150,15 +151,29 @@ void gemini_connect_signals() {
                         GTK_WINDOW(window));
 }
 
+
 void gemini_start() {
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    header = gtk_header_bar_new();
+	
     gtk_window_set_title(GTK_WINDOW(window), "Fegeya Gemini");
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 500);
     gtk_window_set_resizable (GTK_WINDOW(window), TRUE);
-
+    
     icon = create_pixbuf("/usr/share/pixmaps/gemini/gemini.png"); /* Gemini icon. */
+    image = gtk_image_new_from_file("/usr/share/pixmaps/gemini/gemini_32.png");
+    button = gtk_tool_button_new(image, NULL);
+    
+    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);
+    
     gtk_window_set_icon(GTK_WINDOW(window), icon);	
+    g_object_unref(icon);
+    
+    //gtk_button_set_image(GTK_BUTTON (button), image);
+    gtk_header_bar_pack_start(GTK_HEADER_BAR(header), button);
+    gtk_window_set_titlebar(GTK_WINDOW(window), header);
+    	
     /* Start a new shell */
     gchar **envp = g_get_environ();
     gchar **command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL }; /* Get SHELL environment. */
