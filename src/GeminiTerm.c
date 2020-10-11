@@ -109,7 +109,7 @@ void gemini_configuration() {
     /* Set the terminal colors and font */
     vte_terminal_set_colors(VTE_TERMINAL(terminal),
         &CLR_GDK(0xc0d6e4),          /* Foreground */
-        &(GdkRGBA){ .alpha = 0.80 }, /* Background (RGBA) */
+        &(GdkRGBA){ .alpha = 1 }, /* Background (RGBA) */
         (const GdkRGBA[]){           /* Palette */
             CLR_GDK(0x111111),
             CLR_GDK(0xd36265),
@@ -131,6 +131,10 @@ void gemini_configuration() {
 	
 	
     gemini_set_Term_Font(GEMINI_TERM_FONT_SIZE);  
+    
+    gtk_widget_set_visual(window, 
+        gdk_screen_get_rgba_visual(gtk_widget_get_screen(window)));
+    
 }
 
 void gemini_connect_signals() {
