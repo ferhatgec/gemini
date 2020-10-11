@@ -161,15 +161,13 @@ void gemini_start() {
     gtk_window_set_default_size(GTK_WINDOW(window), 800, 500);
     gtk_window_set_resizable (GTK_WINDOW(window), TRUE);
     
-    icon = create_pixbuf("/usr/share/pixmaps/gemini/gemini.png"); /* Gemini icon. */
+    icon = create_pixbuf("/usr/share/pixmaps/gemini/gemini_32.png"); /* Gemini icon. */
     image = gtk_image_new_from_file("/usr/share/pixmaps/gemini/gemini_32.png");
     button = gtk_tool_button_new(image, NULL);
     
-    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);
-    
+    gtk_header_bar_set_show_close_button(GTK_HEADER_BAR(header), TRUE);    
     gtk_window_set_icon(GTK_WINDOW(window), icon);	
-    g_object_unref(icon);
-    
+
     //gtk_button_set_image(GTK_BUTTON (button), image);
     gtk_header_bar_pack_start(GTK_HEADER_BAR(header), button);
     gtk_window_set_titlebar(GTK_WINDOW(window), header);
