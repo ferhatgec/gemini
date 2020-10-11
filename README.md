@@ -1,6 +1,9 @@
 # Fegeya Gemini 
 ## Terminal Emulator based on VTE.
 
+![Huh..Scrift.](/resource/window.png)
+
+
 ### Build
   * Required:
       * LibVTE
