@@ -34,8 +34,8 @@
 GtkWidget *window, *terminal, *header, *button, *image; /* Window, Headerbar && Terminal widget */
 GdkPixbuf *icon; /* Icon */
 
-static char *input;
-static gchar **command, **envp;
+static gchar *input;
+static gchar **command, **input_command, **envp;
 
 static PangoFontDescription *fontDesc; /* Description for the terminal font */
 static int currentFontSize;
@@ -155,7 +155,7 @@ void gemini_connect_signals() {
 }
 
 
-void gemini_start() {
+void gemini_start(char *var) {
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     header = gtk_header_bar_new();
@@ -174,31 +174,48 @@ void gemini_start() {
     //gtk_button_set_image(GTK_BUTTON (button), image);
     gtk_header_bar_pack_start(GTK_HEADER_BAR(header), button);
     gtk_window_set_titlebar(GTK_WINDOW(window), header);
-    	
+    
     /* Start a new shell */
     envp = g_get_environ();
-    command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL}; /* Get SHELL environment. */
     
-    /* If argc > 1 and input is not null, shell run with input */
-    if(input != NULL)
-    	command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), "-c", input, NULL};
+   
+    if(var != NULL) {
+    	command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), "-c", var, NULL }; /* Get SHELL environment. */	
+    	/* Spawn asynchronous terminal */
+    	vte_terminal_spawn_async(VTE_TERMINAL(terminal), 
+        	VTE_PTY_DEFAULT, /* VTE_PTY flag */
+        	NULL,		 /* Working Dir */
+        	command, 	 /* Argv */
+        	NULL, 		 /* Environment value */
+        	G_SPAWN_DEFAULT, /* Spawn flag */
+        	NULL,		 /* Child setup function */
+        	NULL,		 /* Child setup data */
+        	NULL,		 /* Child setup data destroy */
+        	-1,		 /* Timeout */
+        	NULL,		 /* Cancellable */
+        	gemini_Callback, /* Async Callback */
+        	NULL);		 /* Callback data */
+    } else {
+    	command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL }; /* Get SHELL environment. */
+    	/* Spawn asynchronous terminal */
+    	vte_terminal_spawn_async(VTE_TERMINAL(terminal), 
+        	VTE_PTY_DEFAULT, /* VTE_PTY flag */
+        	NULL,		 /* Working Dir */
+        	command, 	 /* Argv */
+        	NULL, 		 /* Environment value */
+        	G_SPAWN_DEFAULT, /* Spawn flag */
+        	NULL,		 /* Child setup function */
+        	NULL,		 /* Child setup data */
+        	NULL,		 /* Child setup data destroy */
+        	-1,		 /* Timeout */
+        	NULL,		 /* Cancellable */
+        	gemini_Callback, /* Async Callback */
+        	NULL);		 /* Callback data */
+    }
+
+	
     
     g_strfreev(envp);
-
-    /* Spawn asynchronous terminal */
-    vte_terminal_spawn_async(VTE_TERMINAL(terminal), 
-        VTE_PTY_DEFAULT, /* VTE_PTY flag */
-        NULL,		 /* Working Dir */
-        command, 	 /* Argv */
-        NULL, 		 /* Environment value */
-        G_SPAWN_DEFAULT, /* Spawn flag */
-        NULL,		 /* Child setup function */
-        NULL,		 /* Child setup data */
-        NULL,		 /* Child setup data destroy */
-        -1,		 /* Timeout */
-        NULL,		 /* Cancellable */
-        gemini_Callback, /* Async Callback */
-        NULL);		 /* Callback data */
 
     /* Connect signals */
     gemini_connect_signals();
@@ -261,8 +278,8 @@ int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);
     
     if(argc > 1)
-    	if(argv[1] != NULL) 
-    		input = argv[1];
+    	input = argv[1];
+ 	else input = NULL;
     
-    gemini_start();
+    gemini_start(input);
 }
