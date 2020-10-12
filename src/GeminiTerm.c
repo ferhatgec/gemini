@@ -22,11 +22,10 @@
 #define CLR_G(x)   (((x) & 0x00ff00) >>  8)
 #define CLR_B(x)   (((x) & 0x0000ff) >>  0)
 #define CLR_16(x)  ((double)(x) / 0xff)
-#define CLR_GDK(x) (const GdkRGBA){ .red = CLR_16(CLR_R(x)), \
+#define CLR_GDK(x, a) (const GdkRGBA) { .red = CLR_16(CLR_R(x)), \
                                     .green = CLR_16(CLR_G(x)), \
                                     .blue = CLR_16(CLR_B(x)), \
-                                    .alpha = 0 }
-
+                                    .alpha = a }
 /*
 	TODO: Add transparent option, customization with given value.
 */
@@ -117,25 +116,25 @@ void gemini_configuration() {
 	
     /* Set the terminal colors and font */
     vte_terminal_set_colors(VTE_TERMINAL(terminal),
-        &CLR_GDK(0xc0d6e4),          /* Foreground */
+        &CLR_GDK(0xc0d6e4, 0),          /* Foreground */
         &(GdkRGBA){ .alpha = 1 }, /* Background (RGBA) */
         (const GdkRGBA[]){           /* Palette */
-            CLR_GDK(0x171421),
-            CLR_GDK(0xC01C28),
-            CLR_GDK(0x26A269),
-            CLR_GDK(0xA2734C),
-            CLR_GDK(0x12488B),
-            CLR_GDK(0xA347BA),
-            CLR_GDK(0x2AA1B3),
-            CLR_GDK(0xD0CFCC),
-            CLR_GDK(0x5E5C64),
-            CLR_GDK(0xF66151),
-            CLR_GDK(0x33D17A),
-            CLR_GDK(0xE9AD0C),
-            CLR_GDK(0x2A7BDE),
-            CLR_GDK(0xC061CB),
-            CLR_GDK(0x33C7DE),
-            CLR_GDK(0xFFFFFF)
+            CLR_GDK(0x171421, 0),
+            CLR_GDK(0xC01C28, 0),
+            CLR_GDK(0x26A269, 0),
+            CLR_GDK(0xA2734C, 0),
+            CLR_GDK(0x12488B, 0),
+            CLR_GDK(0xA347BA, 0),
+            CLR_GDK(0x2AA1B3, 0),
+            CLR_GDK(0xD0CFCC, 0),
+            CLR_GDK(0x5E5C64, 0),
+            CLR_GDK(0xF66151, 0),
+            CLR_GDK(0x33D17A, 0),
+            CLR_GDK(0xE9AD0C, 0),
+            CLR_GDK(0x2A7BDE, 0),
+            CLR_GDK(0xC061CB, 0),
+            CLR_GDK(0x33C7DE, 0),
+            CLR_GDK(0xFFFFFF, 0)
         }, 16);
 	
 	
