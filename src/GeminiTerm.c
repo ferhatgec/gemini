@@ -34,6 +34,9 @@
 GtkWidget *window, *terminal, *header, *button, *image; /* Window, Headerbar && Terminal widget */
 GdkPixbuf *icon; /* Icon */
 
+static char *input;
+static gchar **command, **envp;
+
 static PangoFontDescription *fontDesc; /* Description for the terminal font */
 static int currentFontSize;
 
@@ -173,8 +176,13 @@ void gemini_start() {
     gtk_window_set_titlebar(GTK_WINDOW(window), header);
     	
     /* Start a new shell */
-    gchar **envp = g_get_environ();
-    gchar **command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL }; /* Get SHELL environment. */
+    envp = g_get_environ();
+    command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), NULL}; /* Get SHELL environment. */
+    
+    /* If argc > 1 and input is not null, shell run with input */
+    if(input != NULL)
+    	command = (gchar *[]){g_strdup(g_environ_getenv(envp, "SHELL")), "-c", input, NULL};
+    
     g_strfreev(envp);
 
     /* Spawn asynchronous terminal */
@@ -251,5 +259,10 @@ gboolean gemini_on_keypress(GtkWidget *terminal, GdkEventKey *event,
 int main(int argc, char *argv[]) {
     /* Initialize GTK, the window and the terminal */  
     gtk_init(&argc, &argv);
+    
+    if(argc > 1)
+    	if(argv[1] != NULL) 
+    		input = argv[1];
+    
     gemini_start();
 }
