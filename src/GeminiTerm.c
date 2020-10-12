@@ -120,22 +120,22 @@ void gemini_configuration() {
         &CLR_GDK(0xc0d6e4),          /* Foreground */
         &(GdkRGBA){ .alpha = 1 }, /* Background (RGBA) */
         (const GdkRGBA[]){           /* Palette */
-            CLR_GDK(0x111111),
-            CLR_GDK(0xd36265),
-            CLR_GDK(0xaece91),
-            CLR_GDK(0xe7e18c),
-            CLR_GDK(0x5297cf),
-            CLR_GDK(0x963c59),
-            CLR_GDK(0x5E7175),
-            CLR_GDK(0xbebebe),
-            CLR_GDK(0x666666),
-            CLR_GDK(0xef8171),
-            CLR_GDK(0xcfefb3),
-            CLR_GDK(0xfff796),
-            CLR_GDK(0x74b8ef),
-            CLR_GDK(0xb85e7b),
-            CLR_GDK(0xA3BABF),
-            CLR_GDK(0xffffff)
+            CLR_GDK(0x171421),
+            CLR_GDK(0xC01C28),
+            CLR_GDK(0x26A269),
+            CLR_GDK(0xA2734C),
+            CLR_GDK(0x12488B),
+            CLR_GDK(0xA347BA),
+            CLR_GDK(0x2AA1B3),
+            CLR_GDK(0xD0CFCC),
+            CLR_GDK(0x5E5C64),
+            CLR_GDK(0xF66151),
+            CLR_GDK(0x33D17A),
+            CLR_GDK(0xE9AD0C),
+            CLR_GDK(0x2A7BDE),
+            CLR_GDK(0xC061CB),
+            CLR_GDK(0x33C7DE),
+            CLR_GDK(0xFFFFFF)
         }, 16);
 	
 	
