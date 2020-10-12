@@ -35,7 +35,7 @@ GtkWidget *window, *terminal, *header, *button, *image; /* Window, Headerbar && 
 GdkPixbuf *icon; /* Icon */
 
 static gchar *input;
-static gchar **command, **input_command, **envp;
+static gchar **command, **envp;
 
 static PangoFontDescription *fontDesc; /* Description for the terminal font */
 static int currentFontSize;
@@ -280,6 +280,8 @@ int main(int argc, char *argv[]) {
     if(argc > 1)
     	input = argv[1];
  	else input = NULL;
+    
+    printf("arg: %s\n", argv[1]);
     
     gemini_start(input);
 }
