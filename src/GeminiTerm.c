@@ -116,10 +116,10 @@ void gemini_configuration() {
 	
     /* Set the terminal colors and font */
     vte_terminal_set_colors(VTE_TERMINAL(terminal),
-        &CLR_GDK(0xc0d6e4, 0),          /* Foreground */
-        &(GdkRGBA){ .alpha = 1 }, /* Background (RGBA) */
+        &CLR_GDK(0xc0d6e4, 1),          /* Foreground */
+        &CLR_GDK(0x171421, 1), /* Background (RGBA) */
         (const GdkRGBA[]){           /* Palette */
-            CLR_GDK(0x171421, 0),
+            CLR_GDK(0x3f3b33, 0),
             CLR_GDK(0xC01C28, 0),
             CLR_GDK(0x26A269, 0),
             CLR_GDK(0xA2734C, 0),
