@@ -31,7 +31,12 @@
 	TODO: Add transparent option, customization with given value.
 */
 
-GtkWidget *window, *terminal, *header, *button, *image; /* Window, Headerbar && Terminal widget */
+GtkWidget *window, 
+	  *terminal, 
+	  *header, 
+	  *button, 
+	  *image; /* Window, Headerbar && Terminal widget */
+
 GdkPixbuf *icon; /* Icon */
 
 static gchar *input;
@@ -96,7 +101,7 @@ void gemini_configuration() {
     vte_terminal_set_mouse_autohide(VTE_TERMINAL(terminal), FALSE);
 
     /* Scroll issues */
-    vte_terminal_set_scrollback_lines(VTE_TERMINAL(terminal), 0);
+    vte_terminal_set_scrollback_lines(VTE_TERMINAL(terminal), -1);
     vte_terminal_set_scroll_on_output(VTE_TERMINAL(terminal), FALSE);
     vte_terminal_set_scroll_on_keystroke(VTE_TERMINAL(terminal), TRUE);
     	
